@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from wallets.models import Transaction, Wallet
+from wallets.models import DepositTransaction, Wallet
 from wallets.serializers import WalletSerializer
 
 
@@ -38,11 +38,11 @@ class CreateDepositView(APIView):
 
         wallet.deposit(deposit_amount)
 
-        transaction = Transaction.objects.create(
+        transaction = DepositTransaction.objects.create(
             amount=deposit_amount,
-            type=Transaction.Type.DEPOSIT,
+            type=DepositTransaction.Type.DEPOSIT,
             wallet=wallet,
-            status=Transaction.Status.COMPLETED,
+            status=DepositTransaction.Status.COMPLETED,
         )
 
         return Response(
@@ -52,7 +52,12 @@ class CreateDepositView(APIView):
 
 
 class ScheduleWithdrawView(APIView):
-    def post(self, request, *args, **kwargs):
-        # todo: implement withdraw logic
-        pass
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=["amount"],
+            properties={"amount": openapi.Schema(type=openapi.TYPE_INTEGER)},
+        )
+    )
+    def post(self, request, uuid, *args, **kwargs):
         return Response({})

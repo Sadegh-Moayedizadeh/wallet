@@ -1,15 +1,7 @@
 import uuid
 from enum import Enum
 from django.db import models
-
-
-class Wallet(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    balance = models.BigIntegerField(default=0)
-
-    def deposit(self, amount: int):
-        self.balance += amount
-        self.save()
+from wallets.models.wallet import Wallet
 
 
 class Transaction(models.Model):
@@ -33,9 +25,21 @@ class Transaction(models.Model):
         (Status.CANCELED, "Canceled"),
     ]
 
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     amount = models.BigIntegerField()
     type = models.CharField(max_length=10, choices=_TYPE_CHOICES)
     status = models.CharField(
         max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING
     )
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+
+class WithdrawTransaction(Transaction):
+    scheduled_timestamp = models.DateTimeField()
+
+
+class DepositTransaction(Transaction):
+    pass
