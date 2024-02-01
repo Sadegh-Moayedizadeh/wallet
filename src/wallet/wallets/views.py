@@ -60,7 +60,6 @@ class ScheduleWithdrawView(APIView):
             type=openapi.TYPE_OBJECT,
             required=["wallet_uuid", "amount", "scheduled_timestamp"],
             properties={
-                "wallet_uuid": openapi.Schema(type=openapi.TYPE_STRING),
                 "amount": openapi.Schema(type=openapi.TYPE_NUMBER),
                 "scheduled_timestamp": openapi.Schema(type=openapi.FORMAT_DATE),
             },
