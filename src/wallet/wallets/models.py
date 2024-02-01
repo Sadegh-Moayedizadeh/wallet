@@ -1,5 +1,5 @@
 import uuid
-
+from enum import Enum
 from django.db import models
 
 
@@ -13,14 +13,27 @@ class Wallet(models.Model):
 
 
 class Transaction(models.Model):
-    DEPOSIT = "deposit"
-    WITHDRAW = "withdraw"
+    class Type(Enum):
+        DEPOSIT = "deposit"
+        WITHDRAW = "withdraw"
 
-    TRANSACTION_TYPE_CHOICES = [
-        (DEPOSIT, "Deposit"),
-        (WITHDRAW, "Withdraw"),
+    class Status(Enum):
+        PENDING = 'pending'
+        COMPLETED = 'completed'
+        CANCELED = 'canceled'
+
+    _TYPE_CHOICES = [
+        (Type.DEPOSIT, "Deposit"),
+        (Type.WITHDRAW, "Withdraw"),
+    ]
+
+    _STATUS_CHOICES = [
+        (Status.PENDING, 'Pending'),
+        (Status.COMPLETED, 'Completed'),
+        (Status.CANCELED, 'Canceled'),
     ]
 
     amount = models.BigIntegerField()
-    type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES)
+    type = models.CharField(max_length=10, choices=_TYPE_CHOICES)
+    status = models.CharField(max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING)
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)

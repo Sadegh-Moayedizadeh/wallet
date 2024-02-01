@@ -39,7 +39,7 @@ class CreateDepositView(APIView):
         wallet.deposit(deposit_amount)
 
         transaction = Transaction.objects.create(
-            amount=deposit_amount, type=Transaction.DEPOSIT, wallet=wallet
+            amount=deposit_amount, type=Transaction.Type.DEPOSIT, wallet=wallet
         )
 
         return Response(
