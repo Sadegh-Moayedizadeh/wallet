@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from wallets.models import Wallet
 from wallets.serializers import WalletSerializer
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 class CreateWalletView(CreateAPIView):
@@ -17,12 +19,20 @@ class RetrieveWalletView(RetrieveAPIView):
 
 
 class CreateDepositView(APIView):
-    def post(self, request, *args, **kwargs):
-        wallet_uuid = request.data.get('wallet_uuid')
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['amount'],
+            properties={
+                'amount': openapi.Schema(type=openapi.TYPE_INTEGER)
+            }
+        )
+    )
+    def post(self, request, uuid, *args, **kwargs):
         deposit_amount = request.data.get('amount')
 
         try:
-            wallet = Wallet.objects.get(uuid=wallet_uuid)
+            wallet = Wallet.objects.get(uuid=uuid)
         except Wallet.DoesNotExist:
             return Response({"error": "Wallet not found."}, status=status.HTTP_404_NOT_FOUND)
 
