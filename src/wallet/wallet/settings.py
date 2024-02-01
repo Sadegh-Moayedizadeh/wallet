@@ -137,11 +137,11 @@ REST_FRAMEWORK = {
 
 
 # Third-party bank API
-BANK_API_URL = os.environ.get("BANK_URL", "http://localhost:8010/")
+BANK_API_URL = os.environ.get("BANK_URL", "http://0.0.0.0:8010/")
 
 
 # Celery settings
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://0.0.0.0:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get(
-    "CELERY_RESULT_BACKEND", "redis://localhost:6379/0"
+    "CELERY_RESULT_BACKEND", "redis://0.0.0.0:6379/0"
 )
