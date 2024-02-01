@@ -1,5 +1,6 @@
 import uuid
 from enum import Enum
+
 from django.db import models
 from wallets.models.wallet import Wallet
 
