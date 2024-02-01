@@ -1,7 +1,6 @@
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from wallets.models import Wallet
 from wallets.serializers import WalletSerializer
 
@@ -27,4 +26,3 @@ class ScheduleWithdrawView(APIView):
         # todo: implement withdraw logic
         pass
         return Response({})
-
