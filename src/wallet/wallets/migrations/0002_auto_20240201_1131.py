@@ -7,18 +7,32 @@ import wallets.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wallets', '0001_initial'),
+        ("wallets", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='status',
-            field=models.CharField(choices=[(wallets.models.Transaction.Status['PENDING'], 'Pending'), (wallets.models.Transaction.Status['COMPLETED'], 'Completed'), (wallets.models.Transaction.Status['CANCELED'], 'Canceled')], default=wallets.models.Transaction.Status['PENDING'], max_length=10),
+            model_name="transaction",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    (wallets.models.Transaction.Status["PENDING"], "Pending"),
+                    (wallets.models.Transaction.Status["COMPLETED"], "Completed"),
+                    (wallets.models.Transaction.Status["CANCELED"], "Canceled"),
+                ],
+                default=wallets.models.Transaction.Status["PENDING"],
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='type',
-            field=models.CharField(choices=[(wallets.models.Transaction.Type['DEPOSIT'], 'Deposit'), (wallets.models.Transaction.Type['WITHDRAW'], 'Withdraw')], max_length=10),
+            model_name="transaction",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    (wallets.models.Transaction.Type["DEPOSIT"], "Deposit"),
+                    (wallets.models.Transaction.Type["WITHDRAW"], "Withdraw"),
+                ],
+                max_length=10,
+            ),
         ),
     ]

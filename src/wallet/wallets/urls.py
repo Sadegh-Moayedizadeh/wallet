@@ -1,6 +1,10 @@
 from django.urls import path
-from wallets.views import (CreateDepositView, CreateWalletView,
-                           RetrieveWalletView, ScheduleWithdrawView)
+from wallets.views import (
+    CreateDepositView,
+    CreateWalletView,
+    RetrieveWalletView,
+    ScheduleWithdrawView,
+)
 
 urlpatterns = [
     path("", CreateWalletView.as_view(), name="wallets"),

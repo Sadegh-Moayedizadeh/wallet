@@ -18,9 +18,9 @@ class Transaction(models.Model):
         WITHDRAW = "withdraw"
 
     class Status(Enum):
-        PENDING = 'pending'
-        COMPLETED = 'completed'
-        CANCELED = 'canceled'
+        PENDING = "pending"
+        COMPLETED = "completed"
+        CANCELED = "canceled"
 
     _TYPE_CHOICES = [
         (Type.DEPOSIT, "Deposit"),
@@ -28,12 +28,14 @@ class Transaction(models.Model):
     ]
 
     _STATUS_CHOICES = [
-        (Status.PENDING, 'Pending'),
-        (Status.COMPLETED, 'Completed'),
-        (Status.CANCELED, 'Canceled'),
+        (Status.PENDING, "Pending"),
+        (Status.COMPLETED, "Completed"),
+        (Status.CANCELED, "Canceled"),
     ]
 
     amount = models.BigIntegerField()
     type = models.CharField(max_length=10, choices=_TYPE_CHOICES)
-    status = models.CharField(max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING)
+    status = models.CharField(
+        max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING
+    )
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
