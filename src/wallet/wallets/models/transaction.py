@@ -27,7 +27,7 @@ class Transaction(models.Model):
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    amount = models.BigIntegerField()
+    amount = models.PositiveBigIntegerField()
     type = models.CharField(max_length=10, choices=_TYPE_CHOICES)
     status = models.CharField(
         max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING
