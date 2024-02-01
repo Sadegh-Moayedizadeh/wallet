@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "wallets",
     "homepage",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
