@@ -92,6 +92,7 @@ class ScheduleWithdrawView(APIView):
                 scheduled_timestamp, "%Y-%m-%d"
             ).date()
         except ValueError:
+            wallet.deposit(amount)
             return Response(
                 {"error": "Invalid date format. Use YYYY-MM-DD."},
                 status=status.HTTP_400_BAD_REQUEST,
