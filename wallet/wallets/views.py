@@ -106,7 +106,14 @@ class ScheduleWithdrawView(APIView):
             scheduled_timestamp=scheduled_timestamp,
         )
 
-        process_withdrawal.apply_async(args=[transaction.id], eta=scheduled_timestamp)
+        task = process_withdrawal.apply_async(args=[transaction.id], eta=scheduled_timestamp)
+        if getattr(task, "state", "FAILURE") == "FAILURE":
+            wallet.deposit(amount)
+            transaction.status = WithdrawTransaction.Status.CANCELED
+            return Response(
+                {"message": "Something wrong. Try later."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
         return Response(
             {"message": "Withdraw successful.", "transaction_id": transaction.id},
