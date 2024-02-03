@@ -10,9 +10,9 @@ def process_withdrawal(transaction_id):
     response = request_third_party_deposit()
 
     if response.get("status") == 200:
-        transaction.status = WithdrawTransaction.Status.COMPLETED
+        transaction.status = WithdrawTransaction.Status.COMPLETED.value
     else:
-        transaction.status = WithdrawTransaction.Status.CANCELED
+        transaction.status = WithdrawTransaction.Status.CANCELED.value
         wallet = transaction.wallet
         wallet.deposit(transaction.amount)
 

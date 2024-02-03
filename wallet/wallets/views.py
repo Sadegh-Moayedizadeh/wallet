@@ -43,9 +43,9 @@ class CreateDepositView(APIView):
 
         transaction = DepositTransaction.objects.create(
             amount=deposit_amount,
-            type=DepositTransaction.Type.DEPOSIT,
+            type=DepositTransaction.Type.DEPOSIT.value,
             wallet=wallet,
-            status=DepositTransaction.Status.COMPLETED,
+            status=DepositTransaction.Status.COMPLETED.value,
         )
 
         return Response(
@@ -100,16 +100,16 @@ class ScheduleWithdrawView(APIView):
 
         transaction = WithdrawTransaction.objects.create(
             amount=withdraw_amount,
-            type=WithdrawTransaction.Type.WITHDRAW,
+            type=WithdrawTransaction.Type.WITHDRAW.value,
             wallet=wallet,
-            status=WithdrawTransaction.Status.PENDING,
+            status=WithdrawTransaction.Status.PENDING.value,
             scheduled_timestamp=scheduled_timestamp,
         )
 
         task = process_withdrawal.apply_async(args=[transaction.id], eta=scheduled_timestamp)
         if getattr(task, "state", "FAILURE") == "FAILURE":
             wallet.deposit(withdraw_amount)
-            transaction.status = WithdrawTransaction.Status.CANCELED
+            transaction.status = WithdrawTransaction.Status.CANCELED.value
             return Response(
                 {"message": "Something wrong. Try later."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

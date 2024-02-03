@@ -30,7 +30,7 @@ class Transaction(models.Model):
     amount = models.PositiveBigIntegerField()
     type = models.CharField(max_length=10, choices=_TYPE_CHOICES)
     status = models.CharField(
-        max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING
+        max_length=10, choices=_STATUS_CHOICES, default=Status.PENDING.value
     )
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
 
