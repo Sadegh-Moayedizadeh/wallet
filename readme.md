@@ -41,4 +41,9 @@ $ python wallet/manage.py runserver
 $ celery -A wallet worker -l INFO
 ```
 
-Now you're good to go!
+Now the project should be up and running. To test if it works you can examine the API documentation.
+This project, however, needs a bank API to make withdrawal requests to. For the testing purposes, a
+simple fixture for that is provided which can be run with the following command:
+```bash
+$ python tests/fixtures/bank_api.py
+```
