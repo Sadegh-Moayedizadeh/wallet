@@ -92,7 +92,7 @@ class ScheduleWithdrawView(APIView):
                 scheduled_timestamp, "%Y-%m-%d"
             ).date()
         except ValueError:
-            wallet.deposit(amount)
+            wallet.deposit(withdraw_amount)
             return Response(
                 {"error": "Invalid date format. Use YYYY-MM-DD."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -108,7 +108,7 @@ class ScheduleWithdrawView(APIView):
 
         task = process_withdrawal.apply_async(args=[transaction.id], eta=scheduled_timestamp)
         if getattr(task, "state", "FAILURE") == "FAILURE":
-            wallet.deposit(amount)
+            wallet.deposit(withdraw_amount)
             transaction.status = WithdrawTransaction.Status.CANCELED
             return Response(
                 {"message": "Something wrong. Try later."},
