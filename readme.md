@@ -21,7 +21,7 @@ $ export PYTHONPATH=wallet
 $ python -m venv venv
 ```
 
-* Update pip:
+* Upgrade pip:
 ```bash
 $ pip install -U pip
 ```
