@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
 
 
 # Third-party bank API
-BANK_API_URL = os.environ.get("BANK_URL", "http://loacalhost:8010/")
+BANK_API_URL = os.environ.get("BANK_URL", "http://0.0.0.0:8010/")
 
 
 # Celery settings
