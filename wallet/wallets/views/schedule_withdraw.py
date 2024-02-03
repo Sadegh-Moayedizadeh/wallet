@@ -24,7 +24,7 @@ class ScheduleWithdrawView(APIView):
         operation_description="Withdraw a specific amount from a wallet on a scheduled date.",
     )
     def post(self, request, uuid, *args, **kwargs):
-        withdraw_amount = request.data.get("amount")
+        withdraw_amount = int(request.data.get("amount"))
 
         try:
             wallet = Wallet.objects.get(uuid=uuid)
