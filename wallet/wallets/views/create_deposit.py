@@ -15,7 +15,7 @@ class CreateDepositView(APIView):
         )
     )
     def post(self, request, uuid, *args, **kwargs):
-        deposit_amount = request.data.get("amount")
+        deposit_amount = int(request.data.get("amount"))
 
         try:
             wallet = Wallet.objects.get(uuid=uuid)

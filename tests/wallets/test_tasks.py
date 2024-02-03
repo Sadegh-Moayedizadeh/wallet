@@ -27,7 +27,7 @@ def test_process_withdrawal_when_third_party_request_is_successful_should_update
     mock_response = {"status": 200}
 
     # Act
-    with patch('wallets.tasks.request_third_party_deposit', return_value=mock_response):
+    with patch("wallets.tasks.request_third_party_deposit", return_value=mock_response):
         process_withdrawal(transaction.id)
 
     # Assert
@@ -41,7 +41,7 @@ def test_process_withdrawal_when_third_party_request_is_not_successful_should_up
     mock_response = {"status": 500}
 
     # Act
-    with patch('wallets.tasks.request_third_party_deposit', return_value=mock_response):
+    with patch("wallets.tasks.request_third_party_deposit", return_value=mock_response):
         process_withdrawal(transaction.id)
 
     updated_transaction = WithdrawTransaction.objects.get(pk=transaction.id)
@@ -56,7 +56,7 @@ def test_process_withdrawal_when_third_party_request_is_not_successful_should_de
     mock_response = {"status": 500}
 
     # Act
-    with patch('wallets.tasks.request_third_party_deposit', return_value=mock_response):
+    with patch("wallets.tasks.request_third_party_deposit", return_value=mock_response):
         process_withdrawal(transaction.id)
 
     updated_wallet = Wallet.objects.get(uuid=wallet.uuid)
