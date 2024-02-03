@@ -17,7 +17,7 @@ def payload(wallet):
 @pytest.mark.django_db
 def test_create_deposit_should_add_to_wallets_balance(client, payload, wallet):
     # Arrange
-    url = reverse("deposit", kwargs={"uuid": wallet.uuid})
+    url = reverse("create-deposit", kwargs={"uuid": wallet.uuid})
 
     initial_balance = wallet.balance
     deposit_amount = 100
